@@ -17,10 +17,17 @@
 				$productos = array();
 					
 				//select a la bbdd
-				$products = $dwes->query("SELECT * FROM dwes.products  WHERE familia_id='".$_POST['id_familia']."'");
-				while ($registro = $products->fetch(PDO::FETCH_ASSOC)) {
-					array_push($productos, $registro);
+				try {
+					$products = $dwes->query("SELECT * FROM dwes.products  WHERE familia_id='".$_POST['id_familia']."'");
+					while ($registro = $products->fetch(PDO::FETCH_ASSOC)) {
+						array_push($productos, $registro);
+					}
+
+				}catch(PDOException $error){
+					echo "Error ".$error->getMessage()."<br />";
+
 				}
+				
 		}
 
 ?>

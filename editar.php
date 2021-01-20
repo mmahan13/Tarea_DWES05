@@ -8,17 +8,23 @@
         $producto = array();
                         
         //select a la bbdd
-        $products = $dwes->query("SELECT * FROM dwes.products  WHERE id='".$_POST['id']."'");
-        while ($producto = $products->fetch(PDO::FETCH_ASSOC)) 
-        {
-            $_SESSION['data'] = [
-                'id' => $_POST['id'],
-                'shortname' => $producto['shortname'],
-                'name' => $producto['name'],
-                'descriptions' => $producto['descriptions'],
-                'pvp' => $producto['pvp']
-            ];
+        try{
+            $products = $dwes->query("SELECT * FROM dwes.products  WHERE id='".$_POST['id']."'");
+            while ($producto = $products->fetch(PDO::FETCH_ASSOC)) 
+            {
+                $_SESSION['data'] = [
+                    'id' => $_POST['id'],
+                    'shortname' => $producto['shortname'],
+                    'name' => $producto['name'],
+                    'descriptions' => $producto['descriptions'],
+                    'pvp' => $producto['pvp']
+                ];
+            }
         }
+        catch(PDOException $error){
+            echo "Error ".$error->getMessage()."<br />";
+        }
+       
     }
     
     //al presionar el boton cancelar redirijo al listado
